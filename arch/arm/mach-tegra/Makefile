@@ -145,6 +145,56 @@ obj-y                                   += panel-p-wuxga-10-1.o
 obj-y                                   += panel-lgd-wxga-7-0.o
 obj-y                                   += panel-s-wqxga-10-1.o
 
+<<<<<<< HEAD
+=======
+obj-${CONFIG_MACH_DALMORE}              += board-dalmore.o
+obj-${CONFIG_MACH_DALMORE}              += board-dalmore-memory.o
+obj-${CONFIG_MACH_DALMORE}              += board-dalmore-power.o
+obj-${CONFIG_MACH_DALMORE}              += board-dalmore-sdhci.o
+obj-${CONFIG_MACH_DALMORE}              += board-dalmore-panel.o
+obj-${CONFIG_MACH_DALMORE}              += board-roth-panel.o
+obj-${CONFIG_MACH_DALMORE}              += board-dalmore-kbc.o
+obj-${CONFIG_MACH_DALMORE}              += board-dalmore-sensors.o
+obj-${CONFIG_MACH_DALMORE}              += panel-a-1080p-11-6.o
+obj-${CONFIG_MACH_DALMORE}              += panel-s-wqxga-10-1.o
+
+obj-${CONFIG_MACH_PISMO}                += board-pismo.o
+obj-${CONFIG_MACH_PISMO}                += board-pismo-memory.o
+obj-${CONFIG_MACH_PISMO}                += board-pismo-power.o
+obj-${CONFIG_MACH_PISMO}                += board-pismo-sdhci.o
+obj-${CONFIG_MACH_PISMO}                += board-pismo-panel.o
+obj-${CONFIG_MACH_PISMO}                += board-pismo-sensors.o
+
+obj-${CONFIG_MACH_MACALLAN}             += board-macallan.o
+obj-${CONFIG_MACH_MACALLAN}             += board-macallan-memory.o
+obj-${CONFIG_MACH_MACALLAN}             += board-macallan-power.o
+obj-${CONFIG_MACH_MACALLAN}             += board-macallan-sdhci.o
+obj-${CONFIG_MACH_MACALLAN}             += board-macallan-panel.o
+obj-${CONFIG_MACH_MACALLAN}             += board-macallan-kbc.o
+obj-${CONFIG_MACH_MACALLAN}             += board-macallan-sensors.o
+
+
+obj-${CONFIG_MACH_TEGRA_PLUTO}          += board-pluto.o
+obj-${CONFIG_MACH_TEGRA_PLUTO}          += board-pluto-memory.o
+obj-${CONFIG_MACH_TEGRA_PLUTO}          += board-pluto-power.o
+obj-${CONFIG_MACH_TEGRA_PLUTO}          += board-pluto-sdhci.o
+obj-${CONFIG_MACH_TEGRA_PLUTO}          += board-pluto-panel.o
+obj-${CONFIG_MACH_TEGRA_PLUTO}          += board-pluto-kbc.o
+obj-${CONFIG_MACH_TEGRA_PLUTO}          += board-pluto-sensors.o
+obj-${CONFIG_MACH_TEGRA_PLUTO}          += panel-l-720p-5.o
+obj-${CONFIG_MACH_TEGRA_PLUTO}          += panel-j-720p-4-7.o
+obj-${CONFIG_MACH_TEGRA_PLUTO}          += panel-s-1080p-5.o
+obj-${CONFIG_MACH_APALIS_TK1}           += board-apalis-tk1.o
+obj-${CONFIG_MACH_APALIS_TK1}           += board-apalis-tk1-sdhci.o
+obj-${CONFIG_MACH_APALIS_TK1}           += board-apalis-tk1-sensors.o
+obj-${CONFIG_MACH_APALIS_TK1}           += board-apalis-tk1-panel.o
+obj-${CONFIG_MACH_APALIS_TK1}           += board-apalis-tk1-memory.o
+obj-${CONFIG_MACH_APALIS_TK1}           += board-apalis-tk1-power.o
+obj-${CONFIG_MACH_APALIS_TK1}           += panel-c-lvds-1366-14.o
+ifeq ($(CONFIG_MACH_APALIS_TK1),y)
+obj-${CONFIG_SYSEDP_FRAMEWORK}          += board-apalis-tk1-sysedp.o
+endif
+>>>>>>> 294bec3eaea (arm: tegra: initial support for apalis tk1)
 obj-${CONFIG_MACH_ARDBEG}               += board-ardbeg.o
 obj-${CONFIG_MACH_ARDBEG}               += board-ardbeg-sdhci.o
 obj-${CONFIG_MACH_ARDBEG}               += board-ardbeg-sensors.o
