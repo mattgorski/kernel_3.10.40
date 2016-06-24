@@ -421,3 +421,4 @@ MODULE_AUTHOR("Marcel Ziswiler <marcel.ziswiler@toradex.com>");
 MODULE_DESCRIPTION("ALSA SoC SGTL5000 on Toradex Apalis TK1");
 MODULE_LICENSE("GPL");
 MODULE_ALIAS("platform:" DRV_NAME);
+
