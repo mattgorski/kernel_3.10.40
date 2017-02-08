@@ -1101,9 +1101,9 @@ static int tegra_pcie_enable_controller(void)
 	return ret;
 }
 
-#ifdef USE_REGULATORS
 static int tegra_pcie_enable_regulators(void)
 {
+	int ret;
 	PR_FUNC_LINE;
 	if (tegra_pcie.power_rails_enabled) {
 		pr_debug("PCIE: Already power rails enabled");
@@ -1147,11 +1147,11 @@ static int tegra_pcie_enable_regulators(void)
 		}
 	}
 	if (tegra_pcie.regulator_hvdd)
-		regulator_enable(tegra_pcie.regulator_hvdd);
+		ret = regulator_enable(tegra_pcie.regulator_hvdd);
 	if (tegra_pcie.regulator_pexio)
-		regulator_enable(tegra_pcie.regulator_pexio);
+		ret = regulator_enable(tegra_pcie.regulator_pexio);
 	if (tegra_pcie.regulator_avdd_plle)
-		regulator_enable(tegra_pcie.regulator_avdd_plle);
+		ret = regulator_enable(tegra_pcie.regulator_avdd_plle);
 
 	return 0;
 }
@@ -1167,19 +1167,14 @@ static int tegra_pcie_disable_regulators(void)
 	}
 	if (tegra_pcie.regulator_hvdd)
 		err = regulator_disable(tegra_pcie.regulator_hvdd);
-	if (err)
-		goto err_exit;
 	if (tegra_pcie.regulator_pexio)
 		err = regulator_disable(tegra_pcie.regulator_pexio);
-	if (err)
-		goto err_exit;
 	if (tegra_pcie.regulator_avdd_plle)
 		err = regulator_disable(tegra_pcie.regulator_avdd_plle);
 	tegra_pcie.power_rails_enabled = 0;
 err_exit:
 	return err;
 }
-#endif
 
 static int tegra_pcie_power_ungate(void)
 {
@@ -1434,6 +1429,15 @@ static int tegra_pcie_get_resources(void)
 		pr_err("PCIE: failed to get clocks: %d\n", err);
 		goto err_clk_get;
 	}
+
+	err = tegra_pcie_enable_regulators();
+	if (err) {
+		pr_err("PCIE: failed to setup regulators: %d\n", err);
+		goto err_reg_get;
+	}
+	msleep(100);
+	/* wait 100ms for regulator to power-up */
+
 	err = tegra_pcie_power_on();
 	if (err) {
 		pr_err("PCIE: Failed to power on: %d\n", err);
@@ -1461,6 +1465,7 @@ static int tegra_pcie_get_resources(void)
 
 err_pwr_on:
 	tegra_pcie_power_off(false);
+err_reg_get:
 err_clk_get:
 	tegra_pcie_clocks_put();
 	return err;
@@ -2048,7 +2053,6 @@ static int __init tegra_pcie_probe(struct platform_device *pdev)
 static int tegra_pcie_suspend_noirq(struct device *dev)
 {
 	int ret = 0;
-
 	PR_FUNC_LINE;
 	/* configure PE_WAKE signal as wake sources */
 	if (gpio_is_valid(tegra_pcie.plat_data->gpio_wake) &&
@@ -2061,7 +2065,9 @@ static int tegra_pcie_suspend_noirq(struct device *dev)
 			return ret;
 		}
 	}
-	return tegra_pcie_power_off(true);
+	ret = tegra_pcie_power_off(true);
+	tegra_pcie_disable_regulators();
+	return ret;
 }
 
 static bool tegra_pcie_enable_msi(bool);
@@ -2072,6 +2078,8 @@ static int tegra_pcie_resume_noirq(struct device *dev)
 
 	PR_FUNC_LINE;
 	resume_path = true;
+
+	tegra_pcie_enable_regulators();
 
 	if (gpio_is_valid(tegra_pcie.plat_data->gpio_wake) &&
 			device_may_wakeup(dev)) {
@@ -2090,7 +2098,12 @@ static int tegra_pcie_resume_noirq(struct device *dev)
 		pr_err("PCIE: Failed to power on: %d\n", ret);
 		return ret;
 	}
-	tegra_pcie_enable_pads(true);
+
+	ret = tegra_pcie_enable_pads(true);
+	if (ret) {
+		tegra_pcie_power_off(true);
+		goto exit;
+	}
 	tegra_pcie_enable_controller();
 	tegra_pcie_setup_translations();
 	/* Set up MSI registers, if MSI have been enabled */
@@ -2098,13 +2111,13 @@ static int tegra_pcie_resume_noirq(struct device *dev)
 
 	tegra_pcie_check_ports();
 	if (!tegra_pcie.num_ports) {
-		tegra_pcie_power_off(true);
+		ret = tegra_pcie_power_off(true);
 		goto exit;
 	}
 	resume_path = false;
 
 exit:
-	return 0;
+	return ret;
 }
 
 static int tegra_pcie_resume(struct device *dev)
