@@ -1,19 +1,17 @@
 /dts-v1/;
 
-#include <dt-bindings/display/tegra-dc.h>
-
 #include "tegra124.dtsi"
-#include "tegra124-platforms/tegra124-apalis-displays.dtsi"
+#include "tegra124-platforms/tegra124-apalis-v1.2-displays.dtsi"
 #include "tegra124-platforms/tegra124-apalis-keys.dtsi"
-#include "tegra124-platforms/tegra124-apalis-gpio.dtsi"
-#include "tegra124-platforms/tegra124-apalis-pinmux.dtsi"
+#include "tegra124-platforms/tegra124-apalis-v1.2-gpio.dtsi"
+#include "tegra124-platforms/tegra124-apalis-v1.2-pinmux.dtsi"
 #include "tegra124-platforms/tegra124-apalis-pmic.dtsi"
-#include "tegra124-platforms/tegra124-apalis-fixed.dtsi"
+#include "tegra124-platforms/tegra124-apalis-v1.2-fixed.dtsi"
 
 / {
 	model = "Toradex Apalis TK1 on Apalis Evaluation Board";
-	compatible = "toradex,apalis-tk1-eval", "toradex,apalis-tk1",
-		     "nvidia,tegra124";
+	compatible = "toradex,apalis-tk1-v1.2-eval", "toradex,apalis-tk1-eval",
+		     "toradex,apalis-tk1", "nvidia,tegra124";
 	nvidia,dtsfilename = __FILE__;
 	#address-cells = <2>;
 	#size-cells = <2>;
@@ -69,7 +67,7 @@
 		status = "okay";
 	};
 
-/* TBD: Apalis UART4
+	/* Apalis UART4 */
 	serial@70006300 {
 		compatible = "nvidia,tegra114-hsuart";
 		status = "okay";
@@ -81,7 +79,7 @@
 	 */
 	i2c@7000c000 {
 		status = "okay";
-		clock-frequency = <100000>;
+		clock-frequency = <400000>;
 
 		pcie-switch@58 {
 			compatible = "plx,pex8605";
@@ -90,7 +88,7 @@
 
 		/* M41T0M6 real time clock on carrier board */
 		rtc@68 {
-			compatible = "st,m41t00";
+			compatible = "st,m41t0";
 			reg = <0x68>;
 		};
 	};
