@@ -247,6 +247,10 @@
 				nvidia,pull = <TEGRA_PIN_PULL_NONE>;
 				nvidia,tristate = <TEGRA_PIN_DISABLE>;
 				nvidia,enable-input = <TEGRA_PIN_ENABLE>;
+<<<<<<< HEAD
+=======
+				nvidia,rcv-sel = <TEGRA_PIN_DISABLE>;
+>>>>>>> 9382b7e3039 (ARM: tegra: apalis-tk1: support v1.2 hardware revision)
 			};
 			ddc_sda_pv5 {
 				nvidia,pins = "ddc_sda_pv5";
@@ -254,6 +258,10 @@
 				nvidia,pull = <TEGRA_PIN_PULL_NONE>;
 				nvidia,tristate = <TEGRA_PIN_DISABLE>;
 				nvidia,enable-input = <TEGRA_PIN_ENABLE>;
+<<<<<<< HEAD
+=======
+				nvidia,rcv-sel = <TEGRA_PIN_DISABLE>;
+>>>>>>> 9382b7e3039 (ARM: tegra: apalis-tk1: support v1.2 hardware revision)
 			};
 
 			/* Apalis MMC1 */
