@@ -145,8 +145,6 @@ obj-y                                   += panel-p-wuxga-10-1.o
 obj-y                                   += panel-lgd-wxga-7-0.o
 obj-y                                   += panel-s-wqxga-10-1.o
 
-<<<<<<< HEAD
-=======
 obj-${CONFIG_MACH_DALMORE}              += board-dalmore.o
 obj-${CONFIG_MACH_DALMORE}              += board-dalmore-memory.o
 obj-${CONFIG_MACH_DALMORE}              += board-dalmore-power.o
@@ -195,7 +193,6 @@ obj-${CONFIG_MACH_APALIS_TK1}           += panel-c-lvds-1366-14.o
 ifeq ($(CONFIG_MACH_APALIS_TK1),y)
 obj-${CONFIG_SYSEDP_FRAMEWORK}          += board-apalis-tk1-sysedp.o
 endif
->>>>>>> 294bec3eaea (arm: tegra: initial support for apalis tk1)
 obj-${CONFIG_MACH_ARDBEG}               += board-ardbeg.o
 obj-${CONFIG_MACH_ARDBEG}               += board-ardbeg-sdhci.o
 obj-${CONFIG_MACH_ARDBEG}               += board-ardbeg-sensors.o
@@ -219,7 +216,6 @@ ifeq ($(CONFIG_MACH_ARDBEG),y)
 obj-${CONFIG_SYSEDP_FRAMEWORK}          += board-tn8-sysedp.o
 obj-${CONFIG_SYSEDP_FRAMEWORK}          += board-ardbeg-sysedp.o
 endif
-
 obj-${CONFIG_MACH_LOKI}               	+= board-loki.o
 obj-${CONFIG_MACH_LOKI}               	+= board-loki-kbc.o
 obj-${CONFIG_MACH_LOKI}               	+= board-loki-sensors.o
