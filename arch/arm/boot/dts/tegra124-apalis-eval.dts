@@ -1,5 +1,7 @@
 /dts-v1/;
 
+#include <dt-bindings/display/tegra-dc.h>
+
 #include "tegra124.dtsi"
 #include "tegra124-platforms/tegra124-apalis-keys.dtsi"
 #include "tegra124-platforms/tegra124-apalis-gpio.dtsi"

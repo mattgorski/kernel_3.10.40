@@ -416,11 +416,8 @@ static struct tegra_dc_mode hdmi_panel_modes[] = {
 static struct tegra_dc_out apalis_tk1_disp2_out = {
 	.type		= TEGRA_DC_OUT_HDMI,
 	.flags		= TEGRA_DC_OUT_HOTPLUG_HIGH,
-#ifndef CONFIG_TEGRA_HDMI_PRIMARY
 	.parent_clk	= "pll_d2",
-#else
-	.parent_clk	= "pll_d",
-#endif /* CONFIG_TEGRA_HDMI_PRIMARY */
+
 
 	.ddc_bus	= 1,
 	.hotplug_gpio	= apalis_tk1_hdmi_hpd,
