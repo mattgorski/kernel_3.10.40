@@ -1,0 +1,3009 @@
+# 1 "arch/arm/boot/dts/tegra124-norrin-pm374-0001-a01-00.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "arch/arm/boot/dts/tegra124-norrin-pm374-0001-a01-00.dts"
+/dts-v1/;
+
+# 1 "arch/arm/boot/dts/tegra124-norrin-pm374-0001-common.dtsi" 1
+# 1 "arch/arm/boot/dts/tegra124.dtsi" 1
+# 1 "/media/madman/Extended_Linux/21.8_l4t_build/kernel/arch/arm/boot/dts/include/dt-bindings/gpio/tegra-gpio.h" 1
+# 13 "/media/madman/Extended_Linux/21.8_l4t_build/kernel/arch/arm/boot/dts/include/dt-bindings/gpio/tegra-gpio.h"
+# 1 "/media/madman/Extended_Linux/21.8_l4t_build/kernel/arch/arm/boot/dts/include/dt-bindings/gpio/gpio.h" 1
+# 14 "/media/madman/Extended_Linux/21.8_l4t_build/kernel/arch/arm/boot/dts/include/dt-bindings/gpio/tegra-gpio.h" 2
+# 2 "arch/arm/boot/dts/tegra124.dtsi" 2
+# 1 "/media/madman/Extended_Linux/21.8_l4t_build/kernel/arch/arm/boot/dts/include/dt-bindings/input/input.h" 1
+# 3 "arch/arm/boot/dts/tegra124.dtsi" 2
+# 1 "/media/madman/Extended_Linux/21.8_l4t_build/kernel/arch/arm/boot/dts/include/dt-bindings/interrupt-controller/arm-gic.h" 1
+
+
+
+
+
+
+
+# 1 "/media/madman/Extended_Linux/21.8_l4t_build/kernel/arch/arm/boot/dts/include/dt-bindings/interrupt-controller/irq.h" 1
+# 9 "/media/madman/Extended_Linux/21.8_l4t_build/kernel/arch/arm/boot/dts/include/dt-bindings/interrupt-controller/arm-gic.h" 2
+# 4 "arch/arm/boot/dts/tegra124.dtsi" 2
+# 1 "/media/madman/Extended_Linux/21.8_l4t_build/kernel/arch/arm/boot/dts/include/dt-bindings/ata/ahci-tegra.h" 1
+# 5 "arch/arm/boot/dts/tegra124.dtsi" 2
+
+/include/ "tegra124-soc.dtsi"
+
+/ {
+ compatible = "nvidia,tegra124";
+ interrupt-parent = <&intc>;
+ #address-cells = <2>;
+ #size-cells = <2>;
+
+ mc {
+  compatible = "nvidia,tegra-mc";
+
+  reg-ranges = <9>;
+  reg = <0x0 0x70019000 0x0 0x00c>,
+        <0x0 0x70019050 0x0 0x19c>,
+        <0x0 0x70019200 0x0 0x024>,
+        <0x0 0x7001929c 0x0 0x1b8>,
+        <0x0 0x70019464 0x0 0x198>,
+        <0x0 0x70019604 0x0 0x3b0>,
+        <0x0 0x700199bc 0x0 0x020>,
+        <0x0 0x700199f8 0x0 0x08c>,
+        <0x0 0x70019ab4 0x0 0x54c>;
+
+  interrupts = <0 77 0x4>;
+  int_count = <8>;
+  int_mask = <0x13D40>;
+
+  channels = <1>;
+ };
+
+ intc: interrupt-controller@50041000 {
+  compatible = "arm,cortex-a15-gic";
+  interrupt-controller;
+  #interrupt-cells = <3>;
+  reg = <0x0 0x50041000 0x0 0x1000>,
+        <0x0 0x50042000 0x0 0x0100>;
+ };
+
+ lic: interrupt-controller@60004000 {
+  compatible = "nvidia,tegra-gic";
+  interrupt-controller;
+  reg = <0x0 0x60004000 0x0 0x40>,
+        <0x0 0x60004100 0x0 0x40>,
+        <0x0 0x60004200 0x0 0x40>,
+        <0x0 0x60004300 0x0 0x40>,
+        <0x0 0x60004400 0x0 0x40>;
+        };
+
+ cpus {
+  #address-cells = <1>;
+  #size-cells = <0>;
+
+  cpu@0 {
+   device_type = "cpu";
+   compatible = "arm,cortex-a15";
+   reg = <0>;
+  };
+
+  cpu@1 {
+   device_type = "cpu";
+   compatible = "arm,cortex-a15";
+   reg = <1>;
+  };
+
+  cpu@2 {
+   device_type = "cpu";
+   compatible = "arm,cortex-a15";
+   reg = <2>;
+  };
+
+  cpu@3 {
+   device_type = "cpu";
+   compatible = "arm,cortex-a15";
+   reg = <3>;
+  };
+ };
+
+ timer {
+  compatible = "arm,armv7-timer";
+  interrupts = <1 13 0xf04
+         1 14 0xf04>;
+ };
+
+ dfll@70110000 {
+   compatible = "nvidia,tegra124-dfll";
+   reg = <0x0 0x70110000 0x0 0x400>;
+   out-clock-name="dfll_cpu";
+   status = "disabled";
+ };
+};
+# 2 "arch/arm/boot/dts/tegra124-norrin-pm374-0001-common.dtsi" 2
+# 1 "arch/arm/boot/dts/tegra124-platforms/tegra124-pm374-gpio-default.dtsi" 1
+
+
+/ {
+ gpio: gpio@6000d000 {
+  gpio-init-names = "default";
+  gpio-init-0 = <&gpio_default>;
+
+  gpio_default: default {
+   gpio-input = < ((2 * 8) + 7)
+     ((6 * 8) + 2)
+     ((6 * 8) + 3)
+     ((7 * 8) + 4)
+     ((7 * 8) + 6)
+     ((8 * 8) + 6)
+     ((8 * 8) + 7)
+     ((9 * 8) + 0)
+     ((9 * 8) + 2)
+     ((10 * 8) + 2)
+     ((10 * 8) + 3)
+     ((13 * 8) + 7)
+     ((14 * 8) + 0)
+     ((14 * 8) + 5)
+     ((14 * 8) + 7)
+     ((16 * 8) + 0)
+     ((16 * 8) + 1)
+     ((16 * 8) + 2)
+     ((16 * 8) + 5)
+     ((16 * 8) + 6)
+     ((16 * 8) + 7)
+     ((17 * 8) + 4)
+     ((18 * 8) + 0)
+     ((18 * 8) + 1)
+     ((19 * 8) + 1)
+     ((20 * 8) + 1)
+     ((20 * 8) + 2)
+     ((20 * 8) + 4)
+     ((20 * 8) + 5)
+     ((20 * 8) + 6)
+     ((21 * 8) + 0)
+     ((21 * 8) + 1)
+     ((21 * 8) + 3)
+     ((22 * 8) + 2)
+     ((22 * 8) + 3)
+     ((23 * 8) + 1)
+     ((23 * 8) + 3)
+     ((23 * 8) + 4)
+     ((23 * 8) + 5)
+     ((23 * 8) + 6)
+     ((28 * 8) + 1)
+     ((28 * 8) + 2)>;
+   gpio-output-low = <((6 * 8) + 0)
+     ((15 * 8) + 2)
+     ((31 * 8) + 2)
+     ((6 * 8) + 1)
+     ((7 * 8) + 3)
+     ((7 * 8) + 5)
+     ((7 * 8) + 7)
+     ((8 * 8) + 0)
+     ((8 * 8) + 2)
+     ((8 * 8) + 4)
+     ((10 * 8) + 1)
+     ((10 * 8) + 4)
+     ((10 * 8) + 6)
+     ((14 * 8) + 6)
+     ((17 * 8) + 0)
+     ((17 * 8) + 1)
+     ((17 * 8) + 2)
+     ((18 * 8) + 3)
+     ((18 * 8) + 4)
+     ((18 * 8) + 6)
+     ((20 * 8) + 0)
+     ((20 * 8) + 3)
+     ((23 * 8) + 7)
+     ((27 * 8) + 3)
+     ((27 * 8) + 5)
+     ((27 * 8) + 6)
+     ((27 * 8) + 7)
+     ((28 * 8) + 5)
+     ((31 * 8) + 1)
+     ((7 * 8) + 2)
+     ((30 * 8) + 1)>;
+   gpio-output-high = <
+     ((8 * 8) + 5)
+>;
+  };
+ };
+};
+# 3 "arch/arm/boot/dts/tegra124-norrin-pm374-0001-common.dtsi" 2
+# 1 "arch/arm/boot/dts/tegra124-platforms/tegra124-pm374-pinmux.dtsi" 1
+# 1 "/media/madman/Extended_Linux/21.8_l4t_build/kernel/arch/arm/boot/dts/include/dt-bindings/pinctrl/pinctrl-tegra.h" 1
+# 2 "arch/arm/boot/dts/tegra124-platforms/tegra124-pm374-pinmux.dtsi" 2
+/ {
+  pinmux: pinmux {
+   pinctrl-names = "default", "drive", "unused";
+   pinctrl-0 = <&pinmux_default>;
+   pinctrl-1 = <&drive_default>;
+   pinctrl-2 = <&pinmux_unused_lowpower>;
+
+   pinmux_default: common {
+  dap_mclk1_pw4 {
+   nvidia,pins = "dap_mclk1_pw4";
+   nvidia,function = "extperiph1";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  dap_mclk1_req_pee2 {
+   nvidia,pins = "dap_mclk1_req_pee2";
+   nvidia,function = "sata";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  dap1_din_pn1 {
+   nvidia,pins = "dap1_din_pn1";
+   nvidia,function = "i2s0";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <1>;
+  };
+
+  dap1_dout_pn2 {
+   nvidia,pins = "dap1_dout_pn2";
+   nvidia,function = "i2s0";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <1>;
+  };
+
+  dap1_fs_pn0 {
+   nvidia,pins = "dap1_fs_pn0";
+   nvidia,function = "i2s0";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <1>;
+  };
+  dap1_sclk_pn3 {
+   nvidia,pins = "dap1_sclk_pn3";
+   nvidia,function = "i2s0";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <1>;
+  };
+
+  dap2_din_pa4 {
+   nvidia,pins = "dap2_din_pa4";
+   nvidia,function = "i2s1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <1>;
+  };
+
+  dap2_dout_pa5 {
+   nvidia,pins = "dap2_dout_pa5";
+   nvidia,function = "i2s1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <1>;
+  };
+
+  dap2_fs_pa2 {
+   nvidia,pins = "dap2_fs_pa2";
+   nvidia,function = "i2s1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <1>;
+  };
+
+  dap2_sclk_pa3 {
+   nvidia,pins = "dap2_sclk_pa3";
+   nvidia,function = "i2s1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <1>;
+  };
+
+  dvfs_pwm_px0 {
+   nvidia,pins = "dvfs_pwm_px0";
+   nvidia,function = "cldvfs";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  dvfs_clk_px2 {
+   nvidia,pins = "dvfs_clk_px2";
+   nvidia,function = "cldvfs";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  ulpi_clk_py0 {
+   nvidia,pins = "ulpi_clk_py0";
+   nvidia,function = "spi1";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  ulpi_dir_py1 {
+   nvidia,pins = "ulpi_dir_py1";
+   nvidia,function = "spi1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  ulpi_nxt_py2 {
+   nvidia,pins = "ulpi_nxt_py2";
+   nvidia,function = "spi1";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  ulpi_stp_py3 {
+   nvidia,pins = "ulpi_stp_py3";
+   nvidia,function = "spi1";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  ulpi_data0_po1 {
+   nvidia,pins = "ulpi_data0_po1";
+   nvidia,function = "spi3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  ulpi_data1_po2 {
+   nvidia,pins = "ulpi_data1_po2";
+   nvidia,function = "spi3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  ulpi_data2_po3 {
+   nvidia,pins = "ulpi_data2_po3";
+   nvidia,function = "spi3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  ulpi_data3_po4 {
+   nvidia,pins = "ulpi_data3_po4";
+   nvidia,function = "spi3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  cam_i2c_scl_pbb1 {
+   nvidia,pins = "cam_i2c_scl_pbb1";
+   nvidia,function = "i2c3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+   nvidia,lock = <0>;
+   nvidia,open-drain = <1>;
+  };
+
+  cam_i2c_sda_pbb2 {
+   nvidia,pins = "cam_i2c_sda_pbb2";
+   nvidia,function = "i2c3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+   nvidia,lock = <0>;
+   nvidia,open-drain = <1>;
+  };
+
+  cam_mclk_pcc0 {
+   nvidia,pins = "cam_mclk_pcc0";
+   nvidia,function = "vi_alt3";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pbb0 {
+   nvidia,pins = "pbb0";
+   nvidia,function = "vimclk2_alt";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pbb4 {
+   nvidia,pins = "pbb4";
+   nvidia,function = "vgp4";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  gen2_i2c_scl_pt5 {
+   nvidia,pins = "gen2_i2c_scl_pt5";
+   nvidia,function = "i2c2";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+   nvidia,lock = <0>;
+   nvidia,open-drain = <1>;
+  };
+
+  gen2_i2c_sda_pt6 {
+   nvidia,pins = "gen2_i2c_sda_pt6";
+   nvidia,function = "i2c2";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+   nvidia,lock = <0>;
+   nvidia,open-drain = <1>;
+  };
+
+  pj7 {
+   nvidia,pins = "pj7";
+   nvidia,function = "uartd";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pb0 {
+   nvidia,pins = "pb0";
+   nvidia,function = "uartd";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  pb1 {
+   nvidia,pins = "pb1";
+   nvidia,function = "uartd";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  pk7 {
+   nvidia,pins = "pk7";
+   nvidia,function = "uartd";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pg4 {
+   nvidia,pins = "pg4";
+   nvidia,function = "spi4";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pg5 {
+   nvidia,pins = "pg5";
+   nvidia,function = "spi4";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pg6 {
+   nvidia,pins = "pg6";
+   nvidia,function = "spi4";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pg7 {
+   nvidia,pins = "pg7";
+   nvidia,function = "spi4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pi3 {
+   nvidia,pins = "pi3";
+   nvidia,function = "spi4";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  ph1 {
+   nvidia,pins = "ph1";
+   nvidia,function = "pwm1";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pk0 {
+   nvidia,pins = "pk0";
+   nvidia,function = "soc";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row15_ps7 {
+   nvidia,pins = "kb_row15_ps7";
+   nvidia,function = "soc";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  clk_32k_out_pa0 {
+   nvidia,pins = "clk_32k_out_pa0";
+   nvidia,function = "soc";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc1_clk_pz0 {
+   nvidia,pins = "sdmmc1_clk_pz0";
+   nvidia,function = "sdmmc1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc1_cmd_pz1 {
+   nvidia,pins = "sdmmc1_cmd_pz1";
+   nvidia,function = "sdmmc1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc1_dat0_py7 {
+   nvidia,pins = "sdmmc1_dat0_py7";
+   nvidia,function = "sdmmc1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc1_dat1_py6 {
+   nvidia,pins = "sdmmc1_dat1_py6";
+   nvidia,function = "sdmmc1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc1_dat2_py5 {
+   nvidia,pins = "sdmmc1_dat2_py5";
+   nvidia,function = "sdmmc1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc1_dat3_py4 {
+   nvidia,pins = "sdmmc1_dat3_py4";
+   nvidia,function = "sdmmc1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc3_clk_pa6 {
+   nvidia,pins = "sdmmc3_clk_pa6";
+   nvidia,function = "sdmmc3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc3_cmd_pa7 {
+   nvidia,pins = "sdmmc3_cmd_pa7";
+   nvidia,function = "sdmmc3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc3_dat0_pb7 {
+   nvidia,pins = "sdmmc3_dat0_pb7";
+   nvidia,function = "sdmmc3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc3_dat1_pb6 {
+   nvidia,pins = "sdmmc3_dat1_pb6";
+   nvidia,function = "sdmmc3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc3_dat2_pb5 {
+   nvidia,pins = "sdmmc3_dat2_pb5";
+   nvidia,function = "sdmmc3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc3_dat3_pb4 {
+   nvidia,pins = "sdmmc3_dat3_pb4";
+   nvidia,function = "sdmmc3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc3_clk_lb_out_pee4 {
+   nvidia,pins = "sdmmc3_clk_lb_out_pee4";
+   nvidia,function = "sdmmc3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc3_clk_lb_in_pee5 {
+   nvidia,pins = "sdmmc3_clk_lb_in_pee5";
+   nvidia,function = "sdmmc3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_col4_pq4 {
+   nvidia,pins = "kb_col4_pq4";
+   nvidia,function = "sdmmc3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc3_cd_n_pv2 {
+   nvidia,pins = "sdmmc3_cd_n_pv2";
+   nvidia,function = "sdmmc3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc4_clk_pcc4 {
+   nvidia,pins = "sdmmc4_clk_pcc4";
+   nvidia,function = "sdmmc4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc4_cmd_pt7 {
+   nvidia,pins = "sdmmc4_cmd_pt7";
+   nvidia,function = "sdmmc4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc4_dat0_paa0 {
+   nvidia,pins = "sdmmc4_dat0_paa0";
+   nvidia,function = "sdmmc4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc4_dat1_paa1 {
+   nvidia,pins = "sdmmc4_dat1_paa1";
+   nvidia,function = "sdmmc4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc4_dat2_paa2 {
+   nvidia,pins = "sdmmc4_dat2_paa2";
+   nvidia,function = "sdmmc4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc4_dat3_paa3 {
+   nvidia,pins = "sdmmc4_dat3_paa3";
+   nvidia,function = "sdmmc4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc4_dat4_paa4 {
+   nvidia,pins = "sdmmc4_dat4_paa4";
+   nvidia,function = "sdmmc4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc4_dat5_paa5 {
+   nvidia,pins = "sdmmc4_dat5_paa5";
+   nvidia,function = "sdmmc4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc4_dat6_paa6 {
+   nvidia,pins = "sdmmc4_dat6_paa6";
+   nvidia,function = "sdmmc4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc4_dat7_paa7 {
+   nvidia,pins = "sdmmc4_dat7_paa7";
+   nvidia,function = "sdmmc4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row10_ps2 {
+   nvidia,pins = "kb_row10_ps2";
+   nvidia,function = "uarta";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row9_ps1 {
+   nvidia,pins = "kb_row9_ps1";
+   nvidia,function = "uarta";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row3_pr3 {
+   nvidia,pins = "kb_row3_pr3";
+   nvidia,function = "sys";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row6_pr6 {
+   nvidia,pins = "kb_row6_pr6";
+   nvidia,function = "displaya_alt";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <0>;
+  };
+
+  pwr_i2c_scl_pz6 {
+   nvidia,pins = "pwr_i2c_scl_pz6";
+   nvidia,function = "i2cpwr";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+   nvidia,open-drain = <1>;
+  };
+
+  pwr_i2c_sda_pz7 {
+   nvidia,pins = "pwr_i2c_sda_pz7";
+   nvidia,function = "i2cpwr";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+   nvidia,open-drain = <1>;
+  };
+
+  jtag_rtck {
+   nvidia,pins = "jtag_rtck";
+   nvidia,function = "rtck";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  clk_32k_in {
+   nvidia,pins = "clk_32k_in";
+   nvidia,function = "clk";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  clk2_out_pw5 {
+   nvidia,pins = "clk2_out_pw5";
+   nvidia,function = "extperiph2";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  core_pwr_req {
+   nvidia,pins = "core_pwr_req";
+   nvidia,function = "pwron";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  cpu_pwr_req {
+   nvidia,pins = "cpu_pwr_req";
+   nvidia,function = "cpu";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pwr_int_n {
+   nvidia,pins = "pwr_int_n";
+   nvidia,function = "pmi";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  reset_out_n {
+   nvidia,pins = "reset_out_n";
+   nvidia,function = "reset_out_n";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  clk3_out_pee0 {
+   nvidia,pins = "clk3_out_pee0";
+   nvidia,function = "extperiph3";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  dp_hpd_pff0 {
+   nvidia,pins = "dp_hpd_pff0";
+   nvidia,function = "dp";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  dap4_din_pp5 {
+   nvidia,pins = "dap4_din_pp5";
+   nvidia,function = "i2s3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <1>;
+  };
+
+  dap4_dout_pp6 {
+   nvidia,pins = "dap4_dout_pp6";
+   nvidia,function = "i2s3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <1>;
+  };
+
+  dap4_fs_pp4 {
+   nvidia,pins = "dap4_fs_pp4";
+   nvidia,function = "i2s3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <1>;
+  };
+
+  dap4_sclk_pp7 {
+   nvidia,pins = "dap4_sclk_pp7";
+   nvidia,function = "i2s3";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <1>;
+  };
+
+  gen1_i2c_sda_pc5 {
+   nvidia,pins = "gen1_i2c_sda_pc5";
+   nvidia,function = "i2c1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+   nvidia,lock = <0>;
+   nvidia,open-drain = <1>;
+  };
+
+  gen1_i2c_scl_pc4 {
+   nvidia,pins = "gen1_i2c_scl_pc4";
+   nvidia,function = "i2c1";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+   nvidia,lock = <0>;
+   nvidia,open-drain = <1>;
+  };
+
+  uart2_cts_n_pj5 {
+   nvidia,pins = "uart2_cts_n_pj5";
+   nvidia,function = "uartb";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  uart2_rts_n_pj6 {
+   nvidia,pins = "uart2_rts_n_pj6";
+   nvidia,function = "uartb";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  uart2_rxd_pc3 {
+   nvidia,pins = "uart2_rxd_pc3";
+   nvidia,function = "irda";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  uart2_txd_pc2 {
+   nvidia,pins = "uart2_txd_pc2";
+   nvidia,function = "irda";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  uart3_cts_n_pa1 {
+   nvidia,pins = "uart3_cts_n_pa1";
+   nvidia,function = "uartc";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  uart3_rts_n_pc0 {
+   nvidia,pins = "uart3_rts_n_pc0";
+   nvidia,function = "uartc";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  uart3_rxd_pw7 {
+   nvidia,pins = "uart3_rxd_pw7";
+   nvidia,function = "uartc";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  uart3_txd_pw6 {
+   nvidia,pins = "uart3_txd_pw6";
+   nvidia,function = "uartc";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  hdmi_cec_pee3 {
+   nvidia,pins = "hdmi_cec_pee3";
+   nvidia,function = "cec";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+   nvidia,open-drain = <1>;
+  };
+
+  ddc_scl_pv4 {
+   nvidia,pins = "ddc_scl_pv4";
+   nvidia,function = "i2c4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  ddc_sda_pv5 {
+   nvidia,pins = "ddc_sda_pv5";
+   nvidia,function = "i2c4";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  usb_vbus_en0_pn4 {
+   nvidia,pins = "usb_vbus_en0_pn4";
+   nvidia,function = "usb";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+   nvidia,lock = <0>;
+   nvidia,open-drain = <1>;
+  };
+
+  usb_vbus_en1_pn5 {
+   nvidia,pins = "usb_vbus_en1_pn5";
+   nvidia,function = "usb";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+   nvidia,lock = <0>;
+   nvidia,open-drain = <1>;
+  };
+
+  usb_vbus_en2_pff1 {
+   nvidia,pins = "usb_vbus_en2_pff1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  gpio_x4_aud_px4 {
+   nvidia,pins = "gpio_x4_aud_px4";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  gpio_x5_aud_px5 {
+   nvidia,pins = "gpio_x5_aud_px5";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  gpio_x6_aud_px6 {
+   nvidia,pins = "gpio_x6_aud_px6";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  gpio_x7_aud_px7 {
+   nvidia,pins = "gpio_x7_aud_px7";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  gpio_w2_aud_pw2 {
+   nvidia,pins = "gpio_w2_aud_pw2";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  gpio_w3_aud_pw3 {
+   nvidia,pins = "gpio_w3_aud_pw3";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  gpio_x1_aud_px1 {
+   nvidia,pins = "gpio_x1_aud_px1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  gpio_x3_aud_px3 {
+   nvidia,pins = "gpio_x3_aud_px3";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  dap3_dout_pp2 {
+   nvidia,pins = "dap3_dout_pp2";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pv0 {
+   nvidia,pins = "pv0";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  pv1 {
+   nvidia,pins = "pv1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  ulpi_data4_po5 {
+   nvidia,pins = "ulpi_data4_po5";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  ulpi_data5_po6 {
+   nvidia,pins = "ulpi_data5_po6";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  ulpi_data6_po7 {
+   nvidia,pins = "ulpi_data6_po7";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  ulpi_data7_po0 {
+   nvidia,pins = "ulpi_data7_po0";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  pbb3 {
+   nvidia,pins = "pbb3";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pbb5 {
+   nvidia,pins = "pbb5";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pbb6 {
+   nvidia,pins = "pbb6";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pbb7 {
+   nvidia,pins = "pbb7";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pcc1 {
+   nvidia,pins = "pcc1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <0>;
+  };
+
+  pcc2 {
+   nvidia,pins = "pcc2";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <0>;
+  };
+
+  pg0 {
+   nvidia,pins = "pg0";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pg1 {
+   nvidia,pins = "pg1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  ph2 {
+   nvidia,pins = "ph2";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  ph3 {
+   nvidia,pins = "ph3";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  ph4 {
+   nvidia,pins = "ph4";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  ph5 {
+   nvidia,pins = "ph5";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  ph6 {
+   nvidia,pins = "ph6";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  ph7 {
+   nvidia,pins = "ph7";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pg2 {
+   nvidia,pins = "pg2";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <0>;
+  };
+
+  pg3 {
+   nvidia,pins = "pg3";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <0>;
+  };
+
+  pk1 {
+   nvidia,pins = "pk1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pj0 {
+   nvidia,pins = "pj0";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  pk3 {
+   nvidia,pins = "pk3";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  pk4 {
+   nvidia,pins = "pk4";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pk2 {
+   nvidia,pins = "pk2";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  pi6 {
+   nvidia,pins = "pi6";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  pi2 {
+   nvidia,pins = "pi2";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pi5 {
+   nvidia,pins = "pi5";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pi4 {
+   nvidia,pins = "pi4";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pc7 {
+   nvidia,pins = "pc7";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  pi0 {
+   nvidia,pins = "pi0";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pff2 {
+   nvidia,pins = "pff2";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  clk2_req_pcc5 {
+   nvidia,pins = "clk2_req_pcc5";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  sdmmc1_wp_n_pv3 {
+   nvidia,pins = "sdmmc1_wp_n_pv3";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_col0_pq0 {
+   nvidia,pins = "kb_col0_pq0";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_col1_pq1 {
+   nvidia,pins = "kb_col1_pq1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_col2_pq2 {
+   nvidia,pins = "kb_col2_pq2";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_col5_pq5 {
+   nvidia,pins = "kb_col5_pq5";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_col6_pq6 {
+   nvidia,pins = "kb_col6_pq6";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_col7_pq7 {
+   nvidia,pins = "kb_col7_pq7";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row0_pr0 {
+   nvidia,pins = "kb_row0_pr0";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row1_pr1 {
+   nvidia,pins = "kb_row1_pr1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row11_ps3 {
+   nvidia,pins = "kb_row11_ps3";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row12_ps4 {
+   nvidia,pins = "kb_row12_ps4";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row14_ps6 {
+   nvidia,pins = "kb_row14_ps6";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row17_pt1 {
+   nvidia,pins = "kb_row17_pt1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row2_pr2 {
+   nvidia,pins = "kb_row2_pr2";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row4_pr4 {
+   nvidia,pins = "kb_row4_pr4";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row7_pr7 {
+   nvidia,pins = "kb_row7_pr7";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row8_ps0 {
+   nvidia,pins = "kb_row8_ps0";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  clk3_req_pee1 {
+   nvidia,pins = "clk3_req_pee1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pu0 {
+   nvidia,pins = "pu0";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pu1 {
+   nvidia,pins = "pu1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <0>;
+  };
+
+  pu2 {
+   nvidia,pins = "pu2";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <0>;
+  };
+
+  pu3 {
+   nvidia,pins = "pu3";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pu4 {
+   nvidia,pins = "pu4";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pu5 {
+   nvidia,pins = "pu5";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  pu6 {
+   nvidia,pins = "pu6";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  hdmi_int_pn7 {
+   nvidia,pins = "hdmi_int_pn7";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <0>;
+  };
+
+  spdif_out_pk5 {
+   nvidia,pins = "spdif_out_pk5";
+   nvidia,function = "spdif";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  spdif_in_pk6 {
+   nvidia,pins = "spdif_in_pk6";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+ };
+ pinmux_unused_lowpower: unused_lowpower {
+  dap3_din_pp1 {
+   nvidia,pins = "dap3_din_pp1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  dap3_fs_pp0 {
+   nvidia,pins = "dap3_fs_pp0";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  dap3_sclk_pp3 {
+   nvidia,pins = "dap3_sclk_pp3";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <1>;
+  };
+
+  ph0 {
+   nvidia,pins = "ph0";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <1>;
+  };
+
+  pj2 {
+   nvidia,pins = "pj2";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  pi1 {
+   nvidia,pins = "pi1";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <1>;
+  };
+
+  pi7 {
+   nvidia,pins = "pi7";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  pex_l0_clkreq_n_pdd2 {
+   nvidia,pins = "pex_l0_clkreq_n_pdd2";
+   nvidia,function = "pe0";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pex_l0_rst_n_pdd1 {
+   nvidia,pins = "pex_l0_rst_n_pdd1";
+   nvidia,function = "pe0";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pex_l1_rst_n_pdd5 {
+   nvidia,pins = "pex_l1_rst_n_pdd5";
+   nvidia,function = "pe1";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pex_l1_clkreq_n_pdd6 {
+   nvidia,pins = "pex_l1_clkreq_n_pdd6";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  pex_wake_n_pdd3 {
+   nvidia,pins = "pex_wake_n_pdd3";
+   nvidia,function = "pe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_col3_pq3 {
+   nvidia,pins = "kb_col3_pq3";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <1>;
+  };
+
+  kb_row13_ps5 {
+   nvidia,pins = "kb_row13_ps5";
+   nvidia,function = "safe";
+   nvidia,enable-input = <1>;
+   nvidia,pull = <2>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row16_pt0 {
+   nvidia,pins = "kb_row16_pt0";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  kb_row5_pr5 {
+   nvidia,pins = "kb_row5_pr5";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <0>;
+   nvidia,tristate = <0>;
+  };
+
+  owr {
+   nvidia,pins = "owr";
+   nvidia,function = "safe";
+   nvidia,enable-input = <0>;
+   nvidia,pull = <1>;
+   nvidia,tristate = <1>;
+  };
+ };
+ drive_default: drive {
+  drive_sdio1 {
+   nvidia,pins = "drive_sdio1";
+   nvidia,high-speed-mode = <1>;
+   nvidia,schmitt = <0>;
+   nvidia,pull-down-strength = <32>;
+   nvidia,pull-up-strength = <42>;
+   nvidia,slew-rate-rising = <0>;
+   nvidia,slew-rate-falling = <0>;
+  };
+
+  drive_sdio3 {
+   nvidia,pins = "drive_sdio3";
+   nvidia,high-speed-mode = <1>;
+   nvidia,schmitt = <0>;
+   nvidia,pull-down-strength = <22>;
+   nvidia,pull-up-strength = <36>;
+   nvidia,slew-rate-rising = <0>;
+   nvidia,slew-rate-falling = <0>;
+  };
+
+  drive_gma {
+   nvidia,pins = "drive_gma";
+   nvidia,high-speed-mode = <1>;
+   nvidia,schmitt = <0>;
+   nvidia,low-power-mode = <3>;
+   nvidia,pull-down-strength = <2>;
+   nvidia,pull-up-strength = <1>;
+   nvidia,slew-rate-rising = <0>;
+   nvidia,slew-rate-falling = <0>;
+   nvidia,drive-type = <1>;
+  };
+ };
+  };
+};
+# 4 "arch/arm/boot/dts/tegra124-norrin-pm374-0001-common.dtsi" 2
+# 1 "arch/arm/boot/dts/tegra124-platforms/tegra124-norrin-keys-pm374-0000-a00.dtsi" 1
+
+
+
+/ {
+ gpio-keys {
+  compatible = "gpio-keys";
+
+  power {
+   label = "Power";
+   gpios = <&gpio ((16 * 8) + 0) 1>;
+   linux,code = <116>;
+   gpio-key,wakeup;
+  };
+
+  home {
+   label = "Home";
+   gpios = <&tca6416 1 1>;
+   linux,code = <102>;
+  };
+
+  volume_down {
+   label = "Volume Down";
+   gpios = <&tca6416 5 1>;
+   linux,code = <114>;
+  };
+
+  volume_up {
+   label = "Volume Up";
+   gpios = <&tca6416 4 1>;
+   linux,code = <115>;
+  };
+ };
+};
+# 5 "arch/arm/boot/dts/tegra124-norrin-pm374-0001-common.dtsi" 2
+# 1 "arch/arm/boot/dts/tegra124-platforms/tegra124-norrin-fixed-pm374-0000-a00.dtsi" 1
+
+
+/ {
+ regulators {
+  compatible = "simple-bus";
+  #address-cells = <1>;
+  #size-cells = <0>;
+
+  vdd_ac_bat: regulator@0 {
+   compatible = "regulator-fixed";
+   reg = <0>;
+   regulator-name = "vdd-ac-bat";
+   regulator-min-microvolt = <8400000>;
+   regulator-max-microvolt = <8400000>;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "vdd_sys_bl";
+    };
+    c1 {
+     regulator-consumer-supply = "vddio_pex_sata";
+     regulator-consumer-device = "tegra-sata.0";
+    };
+   };
+  };
+
+  vdd_aon_1v8: regulator@1 {
+   compatible = "regulator-fixed";
+   reg = <1>;
+   regulator-name = "vdd-aon-1v8";
+   regulator-min-microvolt = <1800000>;
+   regulator-max-microvolt = <1800000>;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "vdd_1v8_emmc";
+    };
+    c1 {
+     regulator-consumer-supply = "vdd_1v8b_com_f";
+    };
+    c2 {
+     regulator-consumer-supply = "vdd_1v8b_gps_f";
+    };
+    c3 {
+     regulator-consumer-supply = "vdd";
+     regulator-consumer-device = "0-004c";
+    };
+   };
+  };
+
+  vdd_aon_3v3: regulator@2 {
+   compatible = "regulator-fixed";
+   reg = <2>;
+   regulator-name = "vdd-aon-3v3";
+   regulator-min-microvolt = <3300000>;
+   regulator-max-microvolt = <3300000>;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "vdd_3v3_emmc";
+    };
+    c1 {
+     regulator-consumer-supply = "vdd_com_3v3";
+    };
+   };
+  };
+
+  vdd_aon_1v2: regulator@3 {
+   compatible = "regulator-fixed";
+   reg = <3>;
+   regulator-name = "vdd-aon-1v2";
+   regulator-min-microvolt = <1200000>;
+   regulator-max-microvolt = <1200000>;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "vdd_1v2_bb_hsic";
+    };
+   };
+  };
+
+  vdd_hdmi_5v0: regulator@4 {
+   compatible = "regulator-fixed-sync";
+   reg = <4>;
+   regulator-name = "vdd_hdmi_5v0";
+   regulator-min-microvolt = <5000000>;
+   regulator-max-microvolt = <5000000>;
+   gpio = <&gpio ((10 * 8) + 6) 0>;
+   enable-active-high;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "vdd_hdmi_5v0";
+     regulator-consumer-device = "tegradc.1";
+    };
+   };
+  };
+
+  vdd_hdmi: regulator@5 {
+   compatible = "regulator-fixed-sync";
+   reg = <5>;
+   regulator-name = "vdd_hdmi";
+   regulator-min-microvolt = <3300000>;
+   regulator-max-microvolt = <3300000>;
+   gpio = <&gpio ((7 * 8) + 7) 0>;
+   vin-supply = <&as3722_sd4>;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "avdd_hdmi_pll";
+     regulator-consumer-device = "tegradc.1";
+    };
+   };
+  };
+
+  vdd_lcd_bl: regulator@6 {
+   compatible = "regulator-fixed-sync";
+   reg = <6>;
+   regulator-name = "vdd_lcd_bl";
+   regulator-min-microvolt = <3300000>;
+   regulator-max-microvolt = <3300000>;
+   gpio = <&gpio ((15 * 8) + 2) 0>;
+   enable-active-high;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "vdd_lcd_bl";
+    };
+   };
+  };
+
+  lcd_bl_en: regulator@7 {
+   compatible = "regulator-fixed-sync";
+   reg = <7>;
+   regulator-name = "lcd_bl_en";
+   regulator-min-microvolt = <5000000>;
+   regulator-max-microvolt = <5000000>;
+   gpio = <&gpio ((7 * 8) + 2) 0>;
+   enable-active-high;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "vdd_lcd_bl_en";
+    };
+   };
+  };
+
+  vdd_3v3: regulator@8 {
+   compatible = "regulator-fixed";
+   reg = <8>;
+   regulator-name = "vdd_3v3";
+   regulator-min-microvolt = <3300000>;
+   regulator-max-microvolt = <3300000>;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "hvdd_pex";
+    };
+    c1 {
+     regulator-consumer-supply = "hvdd_pex_pll";
+    };
+    c2 {
+     regulator-consumer-supply = "vdd_sys_cam_3v3";
+    };
+    c3 {
+     regulator-consumer-supply = "micvdd";
+     regulator-consumer-device = "tegra-snd-rt5645.0";
+    };
+    c4 {
+     regulator-consumer-supply = "micvdd";
+     regulator-consumer-device = "tegra-snd-rt5639.0";
+    };
+    c5 {
+     regulator-consumer-supply = "vdd_gps_3v3";
+    };
+    c6 {
+     regulator-consumer-supply = "vdd_nfc_3v3";
+    };
+    c7 {
+     regulator-consumer-supply = "vdd_3v3_sensor";
+    };
+    c8 {
+     regulator-consumer-supply = "vdd_kp_3v3";
+    };
+    c9 {
+     regulator-consumer-supply = "vdd_tp_3v3";
+    };
+    c10 {
+     regulator-consumer-supply = "vdd_dtv_3v3";
+    };
+    c11 {
+     regulator-consumer-supply = "vdd_modem_3v3";
+    };
+    c12 {
+     regulator-consumer-supply = "vdd";
+     regulator-consumer-device = "0-0048";
+    };
+    c13 {
+     regulator-consumer-supply = "vdd";
+     regulator-consumer-device = "0-0069";
+    };
+    c14 {
+     regulator-consumer-supply = "vdd";
+     regulator-consumer-device = "0-000c";
+    };
+    c15 {
+     regulator-consumer-supply = "vdd";
+     regulator-consumer-device = "0-0077";
+    };
+    c16 {
+     regulator-consumer-supply = "vin";
+     regulator-consumer-device = "2-0030";
+    };
+   };
+  };
+
+  vdd_5v0: regulator@9 {
+   compatible = "regulator-fixed";
+   reg = <9>;
+   regulator-name = "vdd_5v0";
+   regulator-min-microvolt = <5000000>;
+   regulator-max-microvolt = <5000000>;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "spkvdd";
+     regulator-consumer-device = "tegra-snd-rt5645.0";
+    };
+    c1 {
+     regulator-consumer-supply = "spkvdd";
+     regulator-consumer-device = "tegra-snd-rt5639.0";
+    };
+    c2 {
+     regulator-consumer-supply = "vdd_5v0_sensor";
+    };
+   };
+  };
+
+  dcdc_1v8: regulator@10 {
+   compatible = "regulator-fixed";
+   reg = <10>;
+   regulator-name = "dcdc_1v8";
+   regulator-min-microvolt = <1800000>;
+   regulator-max-microvolt = <1800000>;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "avdd_lvds0_pll";
+    };
+    c1 {
+     regulator-consumer-supply = "dvdd_lcd";
+    };
+    c2 {
+     regulator-consumer-supply = "vdd_ds_1v8";
+    };
+    c3 {
+     regulator-consumer-supply = "avdd";
+     regulator-consumer-device = "tegra-snd-rt5645.0";
+    };
+    c4 {
+     regulator-consumer-supply = "dbvdd";
+     regulator-consumer-device = "tegra-snd-rt5645.0";
+    };
+    c5 {
+     regulator-consumer-supply = "avdd";
+     regulator-consumer-device = "tegra-snd-rt5639.0";
+    };
+    c6 {
+     regulator-consumer-supply = "dbvdd";
+     regulator-consumer-device = "tegra-snd-rt5639.0";
+    };
+    c7 {
+     regulator-consumer-supply = "dmicvdd";
+     regulator-consumer-device = "tegra-snd-rt5639.0";
+    };
+    c8 {
+     regulator-consumer-supply = "dmicvdd";
+     regulator-consumer-device = "tegra-snd-rt5645.0";
+    };
+    c9 {
+     regulator-consumer-supply = "vdd_1v8b_nfc";
+    };
+    c10 {
+     regulator-consumer-supply = "vdd_1v8_sensor";
+    };
+    c11 {
+     regulator-consumer-supply = "vdd_1v8_sdmmc";
+    };
+    c12 {
+     regulator-consumer-supply = "vdd_kp_1v8";
+    };
+    c13 {
+     regulator-consumer-supply = "vdd_tp_1v8";
+    };
+    c14 {
+     regulator-consumer-supply = "vdd_modem_1v8";
+    };
+    c15 {
+     regulator-consumer-supply = "vdd_1v8b";
+     regulator-consumer-device = "0-0048";
+    };
+    c16 {
+     regulator-consumer-supply = "dvdd";
+     regulator-consumer-device = "spi0.0";
+    };
+    c17 {
+     regulator-consumer-supply = "dvdd";
+     regulator-consumer-device = "spi2.1";
+    };
+    c18 {
+     regulator-consumer-supply = "vlogic";
+     regulator-consumer-device = "0-0069";
+    };
+    c19 {
+     regulator-consumer-supply = "vid";
+     regulator-consumer-device = "0-000c";
+    };
+    c20 {
+     regulator-consumer-supply = "vddio";
+     regulator-consumer-device = "0-0077";
+    };
+    c21 {
+     regulator-consumer-supply = "avdd_pll_utmip";
+     regulator-consumer-device = "tegra-udc.0";
+    };
+    c22 {
+     regulator-consumer-supply = "avdd_pll_utmip";
+     regulator-consumer-device = "tegra-ehci.0";
+    };
+    c23 {
+     regulator-consumer-supply = "avdd_pll_utmip";
+     regulator-consumer-device = "tegra-ehci.1";
+    };
+    c24 {
+     regulator-consumer-supply = "avdd_pll_utmip";
+     regulator-consumer-device = "tegra-ehci.2";
+    };
+    c25 {
+     regulator-consumer-supply = "avdd_pll_utmip";
+     regulator-consumer-device = "tegra-xhci";
+    };
+   };
+  };
+
+  as3722_gpio2: regulator@11 {
+   compatible = "regulator-fixed-sync";
+   reg = <11>;
+   regulator-name = "as3722_gpio2";
+   regulator-min-microvolt = <3300000>;
+   regulator-max-microvolt = <3300000>;
+   regulator-boot-on;
+   gpio = <&as3722 2 0>;
+   enable-active-high;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "avdd_usb";
+     regulator-consumer-device = "tegra-udc.0";
+    };
+    c1 {
+     regulator-consumer-supply = "avdd_usb";
+     regulator-consumer-device = "tegra-ehci.0";
+    };
+    c2 {
+     regulator-consumer-supply = "avdd_usb";
+     regulator-consumer-device = "tegra-ehci.1";
+    };
+    c3 {
+     regulator-consumer-supply = "avdd_usb";
+     regulator-consumer-device = "tegra-ehci.2";
+    };
+    c4 {
+     regulator-consumer-supply = "hvdd_usb";
+     regulator-consumer-device = "tegra-xhci";
+    };
+    c5 {
+     regulator-consumer-supply = "vddio_hv";
+     regulator-consumer-device = "tegradc.1";
+    };
+    c6 {
+     regulator-consumer-supply = "pwrdet_hv";
+    };
+    c7 {
+     regulator-consumer-supply = "hvdd_sata";
+    };
+   };
+  };
+
+  lcd: regulator@12 {
+   compatible = "regulator-fixed-sync";
+   reg = <12>;
+   regulator-name = "lcd";
+   regulator-min-microvolt = <3300000>;
+   regulator-max-microvolt = <3300000>;
+   gpio = <&as3722 4 0>;
+   enable-active-high;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "avdd_lcd";
+    };
+   };
+  };
+
+  vdd_sdmmc_en: regulator@13 {
+   compatible = "regulator-fixed-sync";
+   reg = <13>;
+   regulator-name = "vdd_sdmmc_en";
+   regulator-min-microvolt = <3300000>;
+   regulator-max-microvolt = <3300000>;
+   gpio = <&gpio ((17 * 8) + 0) 0>;
+   enable-active-high;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "vddio_sd_slot";
+     regulator-consumer-device = "sdhci-tegra.1";
+    };
+    c1 {
+     regulator-consumer-supply = "vddio_sd_slot";
+     regulator-consumer-device = "sdhci-tegra.2";
+    };
+   };
+  };
+
+  usb0_vbus: regulator@14 {
+   compatible = "regulator-fixed-sync";
+   reg = <14>;
+   regulator-name = "usb0_vbus";
+   regulator-min-microvolt = <5000000>;
+   regulator-max-microvolt = <5000000>;
+   gpio = <&gpio ((13 * 8) + 4) 0>;
+   enable-active-high;
+   gpio-open-drain;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "usb_vbus";
+     regulator-consumer-device = "tegra-ehci.0";
+    };
+    c1 {
+     regulator-consumer-supply = "usb_vbus";
+     regulator-consumer-device = "tegra-otg";
+    };
+    c2 {
+     regulator-consumer-supply = "usb_vbus0";
+     regulator-consumer-device = "tegra-xhci";
+    };
+   };
+  };
+
+  usb1_usb2_vbus: regulator@15 {
+   compatible = "regulator-fixed-sync";
+   reg = <15>;
+   regulator-name = "usb1_usb2_vbus";
+   regulator-min-microvolt = <5000000>;
+   regulator-max-microvolt = <5000000>;
+   gpio = <&gpio ((13 * 8) + 5) 0>;
+   enable-active-high;
+   gpio-open-drain;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "usb_vbus";
+     regulator-consumer-device = "tegra-ehci.1";
+    };
+    c1 {
+     regulator-consumer-supply = "usb_vbus1";
+     regulator-consumer-device = "tegra-xhci";
+    };
+    c2 {
+     regulator-consumer-supply = "usb_vbus";
+     regulator-consumer-device = "tegra-ehci.2";
+    };
+    c3 {
+     regulator-consumer-supply = "usb_vbus2";
+     regulator-consumer-device = "tegra-xhci";
+    };
+   };
+  };
+
+  dcdc_1v2: regulator@16 {
+   compatible = "regulator-fixed-sync";
+   reg = <16>;
+   regulator-name = "dcdc_1v2";
+   regulator-min-microvolt = <1200000>;
+   regulator-max-microvolt = <1200000>;
+   gpio = <&tca6416 0 0>;
+   enable-active-high;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "vdd_1v2_en";
+    };
+   };
+  };
+
+  vdd_cdc_1v2_aud: regulator@17 {
+   compatible = "regulator-fixed-sync";
+   reg = <17>;
+   regulator-name = "vdd_cdc_1v2_aud";
+   regulator-min-microvolt = <1200000>;
+   regulator-max-microvolt = <1200000>;
+   gpio = <&tca6416 2 0>;
+   enable-active-high;
+   startup-delay-us = <250000>;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "ldoen";
+     regulator-consumer-device = "tegra-snd-rt5639.0";
+    };
+   };
+  };
+
+  vdd_amp_shut_aud: regulator@18 {
+   compatible = "regulator-fixed-sync";
+   reg = <18>;
+   regulator-name = "vdd_amp_shut_aud";
+   regulator-min-microvolt = <1200000>;
+   regulator-max-microvolt = <1200000>;
+   gpio = <&tca6416 3 0>;
+   enable-active-high;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "epamp";
+     regulator-consumer-device = "tegra-snd-rt5645.0";
+    };
+   };
+  };
+
+  vdd_dsi_mux: regulator@19 {
+   compatible = "regulator-fixed-sync";
+   reg = <19>;
+   regulator-name = "vdd_dsi_mux";
+   regulator-min-microvolt = <3300000>;
+   regulator-max-microvolt = <3300000>;
+   gpio = <&tca6416 13 0>;
+   enable-active-high;
+
+   consumers {
+    c0 {
+     regulator-consumer-supply = "vdd_3v3_dsi";
+     regulator-consumer-device = "NULL";
+    };
+   };
+  };
+ };
+};
+# 6 "arch/arm/boot/dts/tegra124-norrin-pm374-0001-common.dtsi" 2
+# 1 "arch/arm/boot/dts/tegra124-platforms/tegra124-norrin-pmic-pm374-0000-a00.dtsi" 1
+# 1 "/media/madman/Extended_Linux/21.8_l4t_build/kernel/arch/arm/boot/dts/include/dt-bindings/mfd/as3722.h" 1
+# 2 "arch/arm/boot/dts/tegra124-platforms/tegra124-norrin-pmic-pm374-0000-a00.dtsi" 2
+
+/ {
+ i2c@7000d000 {
+  as3722: as3722@40 {
+   compatible = "ams,as3722";
+   reg = <0x40>;
+   interrupts = <0 86 0>;
+
+   #interrupt-cells = <2>;
+   interrupt-controller;
+
+   gpio-controller;
+   #gpio-cells = <2>;
+
+   ams,major-rev = <1>;
+   ams,minor-rev = <1>;
+   system-pmic-power-off;
+   ams,extcon-name = "as3722-extcon";
+   ams,enable-adc1-continuous-mode;
+   ams,enable-low-voltage-range;
+   ams,adc-channel = <12>;
+   ams,hi-threshold = <256>;
+   ams,low-threshold = <128>;
+   ams,enable-clock32k-out;
+   ams,oc-pg-mask = <0x1>;
+
+   pinctrl-names = "default";
+   pinctrl-0 = <&as3722_default>;
+
+   as3722_default: pinmux@0 {
+    gpio0 {
+     pins = "gpio0";
+     function = "gpio";
+     output-low;
+    };
+
+    gpio1_2_4_7 {
+     pins = "gpio1", "gpio2", "gpio4", "gpio7";
+     function = "gpio";
+     output-high;
+    };
+
+    gpio3_6 {
+     pins = "gpio3", "gpio6";
+     function = "gpio";
+     bias-high-impedance;
+    };
+
+    gpio5 {
+     pins = "gpio5";
+     function = "clk32k-out";
+    };
+   };
+
+   regulators {
+    compatible = "ams,as3722";
+    ldo0-in-supply = <&as3722_sd2>;
+    ldo2-in-supply = <&as3722_sd5>;
+    ldo5-in-supply = <&as3722_sd5>;
+    ldo7-in-supply = <&as3722_sd5>;
+
+    as3722_sd0: sd0 {
+        regulator-name = "vdd-cpu";
+        regulator-min-microvolt = <650000>;
+        regulator-max-microvolt = <1400000>;
+        regulator-max-microamp = <3500000>;
+        regulator-always-on;
+        regulator-boot-on;
+        ams,ext-control = <2>;
+        consumers {
+     c0 {
+          regulator-consumer-supply = "vdd_cpu";
+     };
+        };
+    };
+
+    as3722_sd1: sd1 {
+        regulator-name = "vdd-core";
+        regulator-min-microvolt = <700000>;
+        regulator-max-microvolt = <1350000>;
+        regulator-max-microamp = <3500000>;
+        regulator-always-on;
+        regulator-boot-on;
+        ams,ext-control = <1>;
+        consumers {
+     c0 {
+          regulator-consumer-supply = "vdd_core";
+     };
+        };
+    };
+
+    as3722_sd2: sd2 {
+         regulator-name = "vddio-ddr";
+         regulator-always-on;
+         regulator-boot-on;
+         consumers {
+     c0 {
+          regulator-consumer-supply = "vddio_ddr";
+     };
+     c1 {
+          regulator-consumer-supply = "vddio_ddr_mclk";
+     };
+     c2 {
+          regulator-consumer-supply = "vddio_ddr3";
+     };
+     c3 {
+          regulator-consumer-supply = "vcore1_ddr3";
+     };
+         };
+    };
+
+    as3722_sd4: sd4 {
+        regulator-name = "avdd-pll-pex";
+        regulator-min-microvolt = <1050000>;
+        regulator-max-microvolt = <1050000>;
+        regulator-always-on;
+        regulator-boot-on;
+        ams,ext-control = <1>;
+        consumers {
+     c0 {
+          regulator-consumer-supply = "avdd_pex_pll";
+     };
+     c1 {
+          regulator-consumer-supply = "avddio_pex_pll";
+     };
+     c2 {
+          regulator-consumer-supply = "dvddio_pex";
+     };
+     c3 {
+          regulator-consumer-supply = "pwrdet_pex_ctl";
+     };
+     c4 {
+          regulator-consumer-supply = "avdd_sata";
+     };
+     c5 {
+          regulator-consumer-supply = "vdd_sata";
+     };
+     c6 {
+          regulator-consumer-supply = "avdd_sata_pll";
+     };
+     c7 {
+          regulator-consumer-supply = "avddio_usb";
+          regulator-consumer-device = "tegra-xhci";
+     };
+     c8 {
+          regulator-consumer-supply = "avdd_hdmi";
+          regulator-consumer-device = "tegradc.1";
+     };
+        };
+    };
+
+    as3722_sd5: sd5 {
+        regulator-name = "vdd-1v8";
+        regulator-always-on;
+        regulator-boot-on;
+        consumers {
+     c0 {
+          regulator-consumer-supply = "vddio_sys";
+     };
+     c1 {
+          regulator-consumer-supply = "vddio_sys_2";
+     };
+     c2 {
+          regulator-consumer-supply = "vddio_audio";
+     };
+     c3 {
+          regulator-consumer-supply = "pwrdet_audio";
+     };
+     c4 {
+          regulator-consumer-supply = "vddio_sdmmc";
+          regulator-consumer-device = "sdhci-tegra.0";
+     };
+     c5 {
+          regulator-consumer-supply = "pwrdet_sdmmc1";
+     };
+     c6 {
+          regulator-consumer-supply = "vddio_sdmmc";
+          regulator-consumer-device = "sdhci-tegra.3";
+     };
+     c7 {
+          regulator-consumer-supply = "pwrdet_sdmmc4";
+     };
+     c8 {
+          regulator-consumer-supply = "vddio_uart";
+     };
+     c9 {
+          regulator-consumer-supply = "pwrdet_uart";
+     };
+     c10 {
+          regulator-consumer-supply = "vddio_bb";
+     };
+     c11 {
+          regulator-consumer-supply = "pwrdet_bb";
+     };
+     c12 {
+          regulator-consumer-supply = "vddio_gmi";
+     };
+     c13 {
+          regulator-consumer-supply = "pwrdet_nand";
+     };
+     c14 {
+          regulator-consumer-supply = "avdd_osc";
+     };
+        };
+    };
+
+    as3722_sd6: sd6 {
+        regulator-name = "vdd-gpu";
+        regulator-min-microvolt = <650000>;
+        regulator-max-microvolt = <1200000>;
+        regulator-max-microamp = <3500000>;
+        regulator-init-microvolt = <1000000>;
+        regulator-boot-on;
+
+        consumers {
+     c0 {
+          regulator-consumer-supply = "vdd_gpu";
+     };
+        };
+    };
+
+    as3722_ldo0: ldo0 {
+         regulator-name = "avdd-pll";
+         regulator-always-on;
+         regulator-boot-on;
+         ams,ext-control = <1>;
+
+         consumers {
+     c0 {
+          regulator-consumer-supply = "avdd_pll_m";
+     };
+     c1 {
+          regulator-consumer-supply = "avdd_pll_ap_c2_c3";
+     };
+     c2 {
+          regulator-consumer-supply = "avdd_pll_cud2dpd";
+     };
+     c3 {
+          regulator-consumer-supply = "avdd_pll_c4";
+     };
+     c4 {
+          regulator-consumer-supply = "avdd_lvds0_io";
+     };
+     c5 {
+          regulator-consumer-supply = "vddio_ddr_hs";
+     };
+     c6 {
+          regulator-consumer-supply = "avdd_pll_erefe";
+     };
+     c7 {
+          regulator-consumer-supply = "avdd_pll_x";
+     };
+     c8 {
+          regulator-consumer-supply = "avdd_pll_cg";
+     };
+        };
+    };
+
+    as3722_ldo1: ldo1 {
+         regulator-name = "vdd-cam";
+         regulator-min-microvolt = <1800000>;
+         regulator-max-microvolt = <1800000>;
+         regulator-boot-on;
+
+         consumers {
+     c0 {
+          regulator-consumer-supply = "vddio_cam";
+          regulator-consumer-device = "vi";
+     };
+     c1 {
+          regulator-consumer-supply = "pwrdet_cam";
+     };
+     c2 {
+          regulator-consumer-supply = "vdd_cam_1v8_cam";
+     };
+     c3 {
+          regulator-consumer-supply = "vif";
+          regulator-consumer-device = "2-0010";
+     };
+     c4 {
+          regulator-consumer-supply = "vdd_i2c";
+          regulator-consumer-device = "2-000e";
+     };
+     c5 {
+          regulator-consumer-supply = "vif";
+          regulator-consumer-device = "2-0036";
+     };
+     c6 {
+          regulator-consumer-supply = "vdd_i2c";
+          regulator-consumer-device = "2-000c";
+     };
+     c7 {
+          regulator-consumer-supply = "vi2c";
+          regulator-consumer-device = "2-0030";
+     };
+        };
+    };
+
+    as3722_ldo2: ldo2 {
+         regulator-name = "avdd-dsi-csi";
+         regulator-boot-on;
+
+         consumers {
+     c0 {
+          regulator-consumer-supply = "avdd_dsi_csi";
+          regulator-consumer-device = "tegradc.0";
+     };
+     c1 {
+          regulator-consumer-supply = "avdd_dsi_csi";
+          regulator-consumer-device = "tegradc.1";
+     };
+     c2 {
+          regulator-consumer-supply = "avdd_dsi_csi";
+          regulator-consumer-device = "vi.0";
+     };
+     c3 {
+          regulator-consumer-supply = "avdd_dsi_csi";
+          regulator-consumer-device = "vi.1";
+     };
+     c4 {
+          regulator-consumer-supply = "pwrdet_mipi";
+     };
+     c5 {
+          regulator-consumer-supply = "avdd_hsic_com";
+     };
+     c6 {
+          regulator-consumer-supply = "avdd_hsic_mdm";
+     };
+     c7 {
+          regulator-consumer-supply = "vddio_hsic";
+          regulator-consumer-device = "tegra-ehci.1";
+     };
+     c8 {
+          regulator-consumer-supply = "vddio_hsic";
+          regulator-consumer-device = "tegra-ehci.2";
+     };
+     c9 {
+          regulator-consumer-supply = "vddio_hsic";
+          regulator-consumer-device = "tegra-xhci";
+     };
+        };
+    };
+
+    as3722_ldo3: ldo3 {
+         regulator-name = "vdd-rtc";
+         regulator-min-microvolt = <800000>;
+         regulator-max-microvolt = <800000>;
+         regulator-always-on;
+         regulator-boot-on;
+         ams,enable-tracking;
+
+         consumers {
+     c0 {
+          regulator-consumer-supply = "vdd_rtc";
+     };
+        };
+    };
+
+    as3722_ldo4: ldo4 {
+         regulator-name = "avdd-cam";
+         regulator-min-microvolt = <2700000>;
+         regulator-max-microvolt = <2700000>;
+
+         consumers {
+     c0 {
+          regulator-consumer-supply = "vdd_2v7_hv";
+     };
+     c1 {
+          regulator-consumer-supply = "avdd_cam2_cam";
+     };
+     c2 {
+          regulator-consumer-supply = "vana";
+          regulator-consumer-device = "2-0010";
+     };
+        };
+    };
+
+    as3722_ldo5: ldo5 {
+         regulator-name = "vdd-1v2-cam";
+         regulator-min-microvolt = <1200000>;
+         regulator-max-microvolt = <1200000>;
+
+         consumers {
+     c0 {
+          regulator-consumer-supply = "vdd_1v2_cam";
+     };
+     c1 {
+          regulator-consumer-supply = "vdig";
+          regulator-consumer-device = "2-0010";
+     };
+     c2 {
+          regulator-consumer-supply = "vdig";
+          regulator-consumer-device = "2-0036";
+     };
+        };
+    };
+
+    as3722_ldo6: ldo6 {
+         regulator-name = "vddio-sdmmc2";
+         regulator-min-microvolt = <1800000>;
+         regulator-max-microvolt = <3300000>;
+
+         consumers {
+     c0 {
+          regulator-consumer-supply = "vddio_sdmmc";
+          regulator-consumer-device = "sdhci-tegra.2";
+     };
+     c1 {
+          regulator-consumer-supply = "pwrdet_sdmmc3";
+     };
+        };
+    };
+
+    as3722_ldo7: ldo7 {
+         regulator-name = "vdd-v1275-cam";
+         regulator-min-microvolt = <1275000>;
+         regulator-max-microvolt = <1275000>;
+
+         consumers {
+     c0 {
+          regulator-consumer-supply = "vdd_cam_1v1_cam";
+     };
+     c1 {
+          regulator-consumer-supply = "imx135_reg2";
+     };
+     c2 {
+          regulator-consumer-supply = "vdig_lv";
+          regulator-consumer-device = "2-0010";
+     };
+     c3 {
+          regulator-consumer-supply = "dvdd";
+          regulator-consumer-device = "2-0010";
+     };
+        };
+    };
+
+    as3722_ldo9: ldo9 {
+         regulator-name = "avdd-spi";
+         regulator-min-microvolt = <3300000>;
+         regulator-max-microvolt = <3300000>;
+         regulator-boot-on;
+
+         consumers {
+     c0 {
+          regulator-consumer-supply = "avdd";
+          regulator-consumer-device = "spi0.0";
+     };
+     c1 {
+          regulator-consumer-supply = "avdd";
+          regulator-consumer-device = "spi2.1";
+     };
+        };
+    };
+
+    as3722_ldo10: ldo10 {
+          regulator-name = "vdd-2v7-cam";
+          regulator-min-microvolt = <2700000>;
+          regulator-max-microvolt = <2700000>;
+
+         consumers {
+     c0 {
+          regulator-consumer-supply = "avdd_af1_cam";
+     };
+     c1 {
+          regulator-consumer-supply = "avdd_cam1_cam";
+     };
+     c2 {
+          regulator-consumer-supply = "imx135_reg1";
+     };
+     c3 {
+          regulator-consumer-supply = "vdd";
+          regulator-consumer-device = "2-000e";
+     };
+     c4 {
+          regulator-consumer-supply = "vana";
+          regulator-consumer-device = "2-0036";
+     };
+     c5 {
+          regulator-consumer-supply = "vdd";
+          regulator-consumer-device = "2-000c";
+     };
+        };
+    };
+
+    as3722_ldo11: ldo11 {
+          regulator-name = "vpp-fuse";
+          regulator-min-microvolt = <1800000>;
+          regulator-max-microvolt = <1800000>;
+    };
+   };
+  };
+ };
+
+ i2c@7000c000 {
+  tca6416: gpio@20 {
+    compatible = "ti,tca6416";
+    reg = <0x20>;
+    gpio-controller;
+   #gpio-cells = <2>;
+   };
+ };
+
+
+ efuse@7000f800 {
+  vpp_fuse-supply = <&as3722_ldo11>;
+ };
+};
+# 7 "arch/arm/boot/dts/tegra124-norrin-pm374-0001-common.dtsi" 2
+
+/ {
+ model = "NVIDIA Tegra124 Norrin";
+ compatible = "nvidia,norrin", "nvidia,tegra124";
+ nvidia,dtsfilename = "arch/arm/boot/dts/tegra124-norrin-pm374-0001-common.dtsi";
+ #address-cells = <2>;
+ #size-cells = <2>;
+
+ chosen {
+  bootargs = "tegraid=40.0.0.00.00 vmalloc=256M video=tegrafb console=ttyS0,115200n8 earlyprintk";
+  linux,initrd-start = <0x85000000>;
+  linux,initrd-end = <0x851bc400>;
+ };
+
+ aliases {
+  gpio264 = &tca6416;
+ };
+
+ serial@70006000 {
+  compatible = "nvidia,tegra114-hsuart";
+  status = "okay";
+ };
+
+ serial@70006040 {
+  compatible = "nvidia,tegra114-hsuart";
+  status = "okay";
+ };
+
+ serial@70006200 {
+  compatible = "nvidia,tegra114-hsuart";
+  status = "okay";
+ };
+
+ i2c@7000c000 {
+
+  tca6416: gpio@20 {
+   compatible = "ti,tca6416";
+   reg = <0x20>;
+   interrupt-parent = <&gpio>;
+   interrupts = <((16 * 8) + 5) 0x0>;
+
+   #gpio-cells = <2>;
+   gpio-controller;
+
+   #interrupt-cells = <2>;
+   interrupt-controller;
+  };
+ };
+
+ i2c@7000d000 {
+  nvidia,bit-banging-xfer-after-shutdown;
+ };
+
+ memory@0x80000000 {
+  device_type = "memory";
+  reg = <0x0 0x80000000 0x0 0x80000000>;
+ };
+
+ spi@7000d400 {
+  status = "okay";
+  spi-max-frequency = <25000000>;
+ };
+
+ spi@7000d800 {
+  status = "okay";
+  spi-max-frequency = <25000000>;
+ };
+
+ spi@7000da00 {
+  status = "okay";
+  spi-max-frequency = <25000000>;
+ };
+
+ pmc {
+  status = "okay";
+  nvidia,invert-interrupt;
+  nvidia,suspend-mode = <0>;
+  nvidia,cpu-pwr-good-time = <2000>;
+  nvidia,cpu-pwr-off-time = <2000>;
+  nvidia,core-pwr-good-time = <3845 3845>;
+  nvidia,core-pwr-off-time = <2000>;
+  nvidia,core-power-req-active-high;
+  nvidia,sys-clock-req-active-high;
+ };
+
+ xusb@70090000 {
+
+
+  nvidia,gpio_ss1_sata = <0>;
+  nvidia,portmap = <0x703>;
+  nvidia,ss_portmap = <0x20>;
+  nvidia,lane_owner = <6>;
+  nvidia,ulpicap = <0>;
+  nvidia,supply_utmi_vbuses = "usb_vbus0", "usb_vbus1", "usb_vbus2";
+  nvidia,supply_s3p3v = "hvdd_usb";
+  nvidia,supply_s1p8v = "avdd_pll_utmip";
+  nvidia,supply_vddio_hsic = "vddio_hsic";
+  nvidia,supply_s1p05v = "avddio_usb";
+
+  nvidia,hsic0 = /bits/8 <0x1 0x1 0x8 0xa 0 0 1 0x22 0>;
+  status = "okay";
+ };
+};
+# 4 "arch/arm/boot/dts/tegra124-norrin-pm374-0001-a01-00.dts" 2
+
+/ {
+ nvidia,boardids = "374:0001:01";
+ nvidia,dtsfilename = "arch/arm/boot/dts/tegra124-norrin-pm374-0001-a01-00.dts";
+ nvidia,proc-boardid = "374:0001:01";
+
+ i2c@7000d000 {
+  as3722@40 {
+   ams,major-rev = <1>;
+   ams,minor-rev = <2>;
+  };
+ };
+};

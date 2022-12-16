@@ -182,7 +182,6 @@
 
 #define RP_VEND_XP						0x00000F00
 #define RP_VEND_XP_DL_UP					(1 << 30)
-#define RP_VEND_XP_UPDATE_FC_THRESHOLD				(0xFF << 18)
 
 #define RP_LINK_CONTROL_STATUS					0x00000090
 
@@ -195,13 +194,6 @@
 
 #define NV_PCIE2_RP_INTR_BCR					0x0000003C
 #define NV_PCIE2_RP_INTR_BCR_INTR_LINE				(0xFF << 0)
-
-#define NV_PCIE2_RP_PRIV_XP_DL					0x00000494
-#define PCIE2_RP_PRIV_XP_DL_GEN2_UPD_FC_TSHOLD			(0x1FF << 1)
-
-#define NV_PCIE2_RP_RX_HDR_LIMIT				0x00000E00
-#define PCIE2_RP_RX_HDR_LIMIT_PW_MASK				(0xFF00)
-#define PCIE2_RP_RX_HDR_LIMIT_PW				(0x0E << 8)
 
 #define NV_PCIE2_RP_PRIV_MISC					0x00000FE0
 #define PCIE2_RP_PRIV_MISC_PRSNT_MAP_EP_PRSNT			(0xE << 0)
@@ -290,6 +282,10 @@ struct tegra_pcie_info {
 	struct regulator	*regulator_hvdd;
 	struct regulator	*regulator_pexio;
 	struct regulator	*regulator_avdd_plle;
+#ifdef CONFIG_MACH_APALIS_TK1
+	struct regulator	*regulator_apalis_tk1_ldo9;
+	struct regulator	*regulator_apalis_tk1_ldo10;
+#endif /* CONFIG_MACH_APALIS_TK1 */
 	struct clk		*pcie_xclk;
 	struct clk		*pcie_mselect;
 	struct clk		*pcie_emc;
@@ -984,8 +980,6 @@ static int tegra_pcie_enable_pads(bool enable)
 	return err;
 }
 
-<<<<<<< HEAD
-=======
 static void tegra_pcie_port_reset(struct tegra_pcie_port *pp, u32 reset_reg)
 {
 	u32 reg;
@@ -1061,21 +1055,10 @@ static int tegra_pcie_enable_controller(void)
 {
 	u32 val, reg;
 	int i, ret = 0, lane_owner;
+	struct tegra_pcie_port *pp;
+	int ctrl_offset = AFI_PEX0_CTRL;
 
 	PR_FUNC_LINE;
-
-#ifdef CONFIG_MACH_APALIS_TK1
-	/* Reset PLX PEX 8605 PCIe Switch plus PCIe devices on Apalis Evaluation
-	   Board */
-	if (g_pex_perst) gpio_request(PEX_PERST_N, "PEX_PERST_N");
-	gpio_request(RESET_MOCI_N, "RESET_MOCI_N");
-	if (g_pex_perst) gpio_direction_output(PEX_PERST_N, 0);
-	gpio_direction_output(RESET_MOCI_N, 0);
-
-	/* Reset I210 Gigabit Ethernet Controller */
-	gpio_request(LAN_RESET_N, "LAN_RESET_N");
-	gpio_direction_output(LAN_RESET_N, 0);
-#endif /* CONFIG_MACH_APALIS_TK1 */
 
 	/* Enable slot clock and ensure reset signal is assert */
 	for (i = 0; i < ARRAY_SIZE(pex_controller_registers); i++) {
@@ -1152,24 +1135,11 @@ static int tegra_pcie_enable_controller(void)
 	/* Wait for clock to latch (min of 100us) */
 	udelay(100);
 
-	/* deassert PEX reset signal */
-	for (i = 0; i < ARRAY_SIZE(pex_controller_registers); i++) {
-		val = afi_readl(pex_controller_registers[i]);
-		val |= AFI_PEX_CTRL_RST;
-		afi_writel(val, pex_controller_registers[i]);
+	pp = tegra_pcie.port + tegra_pcie.num_ports;
+	for (i = 0; i < MAX_PCIE_SUPPORTED_PORTS; i++) {
+		ctrl_offset += (i * 8);
+		tegra_pcie_port_reset(pp, ctrl_offset);
 	}
-
-#ifdef CONFIG_MACH_APALIS_TK1
-	/* Must be asserted for 100 ms after power and clocks are stable */
-	if (g_pex_perst) gpio_set_value(PEX_PERST_N, 1);
-	/* Err_5: PEX_REFCLK_OUTpx/nx Clock Outputs is not Guaranteed Until
-	   900 us After PEX_PERST# De-assertion */
-	if (g_pex_perst) mdelay(1);
-	gpio_set_value(RESET_MOCI_N, 1);
-
-	/* Release I210 Gigabit Ethernet Controller Reset */
-	gpio_set_value(LAN_RESET_N, 1);
-#endif /* CONFIG_MACH_APALIS_TK1 */
 
 	return ret;
 }
@@ -1219,12 +1189,37 @@ static int tegra_pcie_enable_regulators(void)
 			tegra_pcie.regulator_avdd_plle = 0;
 		}
 	}
+
+#ifdef CONFIG_MACH_APALIS_TK1
+	if (tegra_pcie.regulator_apalis_tk1_ldo9 == NULL) {
+		tegra_pcie.regulator_apalis_tk1_ldo9 = regulator_get(tegra_pcie.dev, "i210_vdd3p3_ldo9");
+		if (IS_ERR(tegra_pcie.regulator_apalis_tk1_ldo9)) {
+			pr_err("pcie: couldn't get regulator i210_vdd3p3_ldo9\n");
+			tegra_pcie.regulator_apalis_tk1_ldo9 = 0;
+		}
+	}
+
+	if (tegra_pcie.regulator_apalis_tk1_ldo10 == NULL) {
+		tegra_pcie.regulator_apalis_tk1_ldo10 = regulator_get(tegra_pcie.dev, "i210_vdd3p3_ldo10");
+		if (IS_ERR(tegra_pcie.regulator_apalis_tk1_ldo10)) {
+			pr_err("pcie: couldn't get regulator i210_vdd3p3_ldo10\n");
+			tegra_pcie.regulator_apalis_tk1_ldo10 = 0;
+		}
+	}
+#endif /* CONFIG_MACH_APALIS_TK1 */
+
 	if (tegra_pcie.regulator_hvdd)
 		ret = regulator_enable(tegra_pcie.regulator_hvdd);
 	if (tegra_pcie.regulator_pexio)
 		ret = regulator_enable(tegra_pcie.regulator_pexio);
 	if (tegra_pcie.regulator_avdd_plle)
 		ret = regulator_enable(tegra_pcie.regulator_avdd_plle);
+#ifdef CONFIG_MACH_APALIS_TK1
+	if (tegra_pcie.regulator_apalis_tk1_ldo9)
+		ret = regulator_enable(tegra_pcie.regulator_apalis_tk1_ldo9);
+	if (tegra_pcie.regulator_apalis_tk1_ldo10)
+		ret = regulator_enable(tegra_pcie.regulator_apalis_tk1_ldo10);
+#endif /* CONFIG_MACH_APALIS_TK1 */
 
 	return 0;
 }
@@ -1587,16 +1582,8 @@ static bool tegra_pcie_check_link(struct tegra_pcie_port *pp, int idx,
 		}
 
 retry:
-		if (--retries) {
-			/* Pulse the PEX reset */
-/* TBD: timing not as per PCIe spec */
-			reg = afi_readl(reset_reg) & ~AFI_PEX_CTRL_RST;
-			afi_writel(reg, reset_reg);
-			reg = afi_readl(reset_reg) | AFI_PEX_CTRL_RST;
-			afi_writel(reg, reset_reg);
-		}
-
-	} while (retries);
+		tegra_pcie_port_reset(pp, reset_reg);
+	} while (--retries);
 
 	return false;
 }
@@ -1622,19 +1609,6 @@ static void tegra_pcie_apply_sw_war(int index, bool enum_done)
 		data = rp_readl(NV_PCIE2_RP_INTR_BCR, index);
 		data |= NV_PCIE2_RP_INTR_BCR_INTR_LINE;
 		rp_writel(data, NV_PCIE2_RP_INTR_BCR, index);
-		/* WAR for RAW violation on T124/T132 platforms */
-		data = rp_readl(NV_PCIE2_RP_RX_HDR_LIMIT, index);
-		data &= ~PCIE2_RP_RX_HDR_LIMIT_PW_MASK;
-		data |= PCIE2_RP_RX_HDR_LIMIT_PW;
-		rp_writel(data, NV_PCIE2_RP_RX_HDR_LIMIT, index);
-
-		data = rp_readl(NV_PCIE2_RP_PRIV_XP_DL, index);
-		data |= PCIE2_RP_PRIV_XP_DL_GEN2_UPD_FC_TSHOLD;
-		rp_writel(data, NV_PCIE2_RP_PRIV_XP_DL, index);
-
-		data = rp_readl(RP_VEND_XP, index);
-		data |= RP_VEND_XP_UPDATE_FC_THRESHOLD;
-		rp_writel(data, RP_VEND_XP, index);
 	}
 }
 
@@ -2037,6 +2011,15 @@ static int __init tegra_pcie_init(void)
 		tegra_pcie_power_off(false);
 		return err;
 	}
+
+#ifdef CONFIG_MACH_APALIS_TK1
+	gpio_request(LAN_DEV_OFF_N, "LAN_DEV_OFF_N");
+	gpio_request(LAN_RESET_N, "LAN_RESET_N");
+	gpio_request(LAN_WAKE_N, "LAN_WAKE_N");
+	if (g_pex_perst) gpio_request(PEX_PERST_N, "PEX_PERST_N");
+	gpio_request(RESET_MOCI_CTRL, "RESET_MOCI_CTRL");
+#endif /* CONFIG_MACH_APALIS_TK1 */
+
 	err = tegra_pcie_enable_controller();
 	if (err) {
 		pr_err("PCIE: enable controller failed\n");
